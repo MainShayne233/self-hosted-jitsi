@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+source "$(dirname $(realpath $0))/common.sh"
+
+main() {
+  validate_binaries "docker" "cat"
+}
+
+main "$@"
