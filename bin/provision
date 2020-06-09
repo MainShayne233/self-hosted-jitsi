@@ -3,7 +3,18 @@
 source "$(dirname $(realpath $0))/common.sh"
 
 main() {
-  validate_binaries "docker" "cat"
+  validate_binaries "docker" "docker-compose" "git"
+
+  git clone "https://github.com/jitsi/docker-jitsi-meet"
+
+  (
+    cd docker-jitsi-meet
+    # replace w/ fetch of proper secrets
+    cp env.example .env
+    ./gen-passwords.sh
+    mkdir -p ~/.jitsi-meet-cfg/{web/letsencrypt,transcripts,prosody/config,prosody/prosody-plugins-custom,jicofo,jvb,jigasi,jibri}
+    docker-compose up -d
+  )
 }
 
 main "$@"
